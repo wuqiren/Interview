@@ -1,12 +1,19 @@
-let a = {
-    value: 1,
- 
-}
-function getValue(name, age) {
-    console.log(this.name)
-    console.log(age)
-    console.log(this.value)
-}
-getValue.call(a, 'poe', '24')
+for(let i = 1; i <= 5; i ++){
+    setTimeout(function() {
+      console.log(i)
+    }, 0)
+  }
 
-console.log( Math.max(1,2))
+for(var i = 1; i <= 5; i ++){
+    (function(j){
+        setTimeout(function() {
+            console.log(j)
+        },0)
+    })(i)
+}
+
+for(var i = 1; i <= 5; i ++){
+    setTimeout(function(j) {
+      console.log(j)
+    }, 0,i)
+  }
