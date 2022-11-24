@@ -7,4 +7,3 @@ function _new(Fuc) {
       return obj
     }
   }
-j

@@ -1,19 +1,10 @@
-for(let i = 1; i <= 5; i ++){
-    setTimeout(function() {
-      console.log(i)
-    }, 0)
-  }
-
-for(var i = 1; i <= 5; i ++){
-    (function(j){
-        setTimeout(function() {
-            console.log(j)
-        },0)
-    })(i)
+function sum(a, b) {
+  let args = Array.from(arguments);
+  console.log(arguments,'arguments')
+  console.log(args,'argss')
+  const vb=arguments.reduce((a,b)=>{
+    a.push(arguments[b]);return a},[])
+  console.log(vb)
+  console.log(args.reduce((sum, cur) => sum + cur));
 }
-
-for(var i = 1; i <= 5; i ++){
-    setTimeout(function(j) {
-      console.log(j)
-    }, 0,i)
-  }
+sum(1,2)

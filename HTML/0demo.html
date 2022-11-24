@@ -13,19 +13,12 @@
     <li>3</li>
 </ul>
 <script>
-  window.onload = function(){
-    var ulEle = document.getElementById('ul');
-    ul.onclick = function(ev){
-        //兼容IE
-        ev = ev || window.event;
-        var target = ev.target || ev.srcElement;
-        
-        if(target.nodeName.toLowerCase() == 'li'){
-            alert( target.innerHTML);
-        }
-        
-    }
-  }
+  document.body.style.background = 'red'
+  console.log('1')
+  setTimeout(()=>{
+    console.log('2')
+    document.body.style.background = 'yellow'
+},1000)
 </script>
 </body>
 </html>
