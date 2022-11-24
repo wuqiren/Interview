@@ -10,7 +10,7 @@ function flatten(arr){
         }
     }
     return result;
-}
+}jmjj
 
 function flatten1(arr){
     return arr.reduce((a,b)=>{
@@ -21,8 +21,15 @@ function flatten1(arr){
 function flatten2(arr){
     while (arr.some(item => Array.isArray(item))) {
         arr = [].concat(...arr);
-    }
+    } 
     return arr;
+}
+function flatten3(arr){
+    return arr.toString().split(',')
+}
+
+function flatten4(arr){
+    return arr.flat(Infinity)
 }
 
 console.log(flatten2(a))
