@@ -59,7 +59,6 @@ function selectSort(array){
             if(array[j]<=array[minIndex]){
                 minIndex=j
             }
-
         }
         temp =array[i]
         array[i]=array[minIndex]

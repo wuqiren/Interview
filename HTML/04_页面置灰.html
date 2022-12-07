@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #div1{
+            width: 1000px;
+            height: 5000px;
+            background-color:#37eb1b
+        }
+        #div2{
+            width: 100px;
+            height: 500px;
+            background-color:#f74012
+        }
+        #div3{
+            width: 100px;
+            height: 500px;
+            background-color:#560cf5
+        }
+        p{
+            width: 1000px;
+            height: 5000px;
+            background-color:yellow;
+            z-index: 9999;
+            position: relative;
+        }
+   html {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    }
+    html::before {
+        content: "";
+        position: fixed;
+        backdrop-filter: grayscale(100%);
+        pointer-events: none;
+        inset: 0;
+        z-index: 100;
+    }
+    </style>
+</head>
+<body>
+    <button id="set-gray" class="btn">置灰</button>
+    <div id="div1">
+        <div id="div2"></div>
+        <div id="div3"></div>
+    </div>
+    <p></p>
+    <script>
+        let style = document.createElement("style");
+        let graySelector = 'gray-filter';
+        style.setAttribute("type", "text/css");
+        style.textContent=`.${graySelector}{
+            filter: grayscale(100%);
+        }`
+        document.head.appendChild(style);
+        let root= document.querySelector("html")
+        let btn = document.querySelector("#set-gray")
+        btn && btn.addEventListener("click",()=>{
+            setAllGray()
+        },false)
+        function toggleClassName(el,name){
+            if(el.className.indexOf(name)>-1){
+                el.className = el.className.replace(name,'').trim()
+            }else{
+                el.className =[el.className,name].join(' ')
+            }
+        }
+        function setAllGray(){
+            toggleClassName(root,graySelector)
+        }
+    </script>
+</body>
+</html>
