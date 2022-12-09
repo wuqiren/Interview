@@ -15,9 +15,23 @@
       background-color:red
     }
   </style>
+   <script type="text/javascript">
+
+window.addEventListener('unload', (event) => {
+  alert('111')
+  // 显示确认对话框
+  event.preventDefault();
+  // 为了兼容处理，Chrome需要设置returnValue
+  event.returnValue = '';
+});
+window.unload = function(event) { 
+	alert('222')
+};
+  </script>
 </head>
 <body>
   <div></div>
+ 
 </body>
 </html>
  
