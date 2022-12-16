@@ -1,37 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style type="text/css">
-    html{
-      filter:grayscale(100%)
-    }
-    div{
-      width:1000px;
-      height:2000px;
-      background-color:red
-    }
-  </style>
-   <script type="text/javascript">
 
-window.addEventListener('unload', (event) => {
-  alert('111')
-  // 显示确认对话框
-  event.preventDefault();
-  // 为了兼容处理，Chrome需要设置returnValue
-  event.returnValue = '';
-});
-window.unload = function(event) { 
-	alert('222')
-};
-  </script>
-</head>
+<html>
 <body>
-  <div></div>
- 
+    <div>1</div>
+    <div>test</div>
+
+    <script>
+    let div1 = document.getElementsByTagName('div')[0]
+    div1.innerText = 'time.geekbang'
+
+    let div2 = document.getElementsByTagName('div')[1]
+    div2.innerText = 'time.geekbang.com'
+    </script>
 </body>
 </html>
  
