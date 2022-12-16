@@ -31,3 +31,4 @@ p4.catch((error) => {
   console.log("error") //// rand<0.5 
 })
 console.log(2)
+ 
