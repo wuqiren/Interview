@@ -79,6 +79,57 @@ console.log('script end')
 
 
 `
+async function foo() {
+    // 6-执行
+    console.log('foo')
+}
+async function bar() {
+    // 4-执行
+    console.log('bar start')
+    /**
+     * 5-执行foo函数并生成第一个Promise微任务，相当于
+     * new Promise((resolved) => {
+     *     resolved(foo())
+     *     //将主线程控制权交给父协程
+     * }).then(
+     *     // 9-执行微任务
+     *     (value)=>{
+     *         //将主线程控制权交给foo协程，并将vaule值传给协程
+     *     }
+     * )
+     */
+    await foo()
+    // 10-协程继续，执行代码
+    console.log('bar end')
+}
+// 1-执行
+console.log('script start')
+setTimeout(
+    // 2-进入延时队列尾
+    // 13-执行延时队列任务（宏任务）
+    function () {
+        console.log('setTimeout')
+    }
+    , 0
+)
+// 3-执行
+bar();
+// 7-执行
+new Promise(function (resolve) {
+    console.log('promise executor')
+    resolve();
+    // 8-生成第二个微任务
+}).then(
+    // 11-执行微任务
+    function () {
+        console.log('promise then')
+    }
+)
+// 9-执行
+console.log('script end')
+`
+
+`
 async function async1() {
   console.log('async1 start') // 2
   await async2()
