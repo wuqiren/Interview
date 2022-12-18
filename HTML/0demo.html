@@ -2,15 +2,21 @@
 
 <html>
 <body>
-    <div>1</div>
-    <div>test</div>
-
+    <div class="test"></div>
+    <style>
+      .test {
+        position: absolute;
+        top: 10px;
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
+    </style>
     <script>
-    let div1 = document.getElementsByTagName('div')[0]
-    div1.innerText = 'time.geekbang'
-
-    let div2 = document.getElementsByTagName('div')[1]
-    div2.innerText = 'time.geekbang.com'
+      setTimeout(() => {
+        // 引起回流
+        document.querySelector('.test').style.transform = 'translateY(100px)'
+      }, 1000)
     </script>
 </body>
 </html>
