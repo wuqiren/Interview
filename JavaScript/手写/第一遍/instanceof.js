@@ -10,3 +10,16 @@ function _instanceof(left,right){
         left = left.__proto__
     }
 }
+
+function myInstanceof(left,right){
+    if(typeof left!=='object'|| left===null){return false}
+    let prototype = right.prototype
+    let proto=left.__proto__
+    while(true){
+        if(proto===null||proto===undefined){return false;}
+        if(proto===prototype){
+            return true
+        }
+        proto=proto.__proto__
+    }
+}
