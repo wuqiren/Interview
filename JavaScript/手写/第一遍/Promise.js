@@ -20,6 +20,8 @@ promise内部有resolved_和rejected_变量保存成功和失败的回调，
  * 
  */
 
+const { it } = require("node:test");
+
 
 class Promise1{
     static PENDING='pending';
@@ -60,14 +62,16 @@ class Promise1{
     }
     then(onFulfilled,onRejected){
         let promise2= new Promise1((resolve, reject)=>{
-            onFulfilled=typeof onFulfilled=='function'?onFulfilled:()=>{};
-            onRejected=typeof onRejected=='function'?onRejected: err => { throw err };
+            onFulfilled=typeof onFulfilled=='function'?onFulfilled:()=>{
+              return this.result
+            };
+            onRejected=typeof onRejected=='function'?onRejected: () => {  return this.result};
             if(this.status===Promise1.PENDING){
-                this.resolveCallback.push(()=>{
-                    resolvePromise(promise2,onFulfilled(this.result), resolve, reject)
+                this.resolveCallback.push((value)=>{
+                    resolvePromise(promise2,onFulfilled(value), resolve, reject)
                 })
-                this.rejectCallback.push(()=>{
-                    resolvePromise(promise2,onRejected(this.result), resolve, reject)
+                this.rejectCallback.push((value)=>{
+                    resolvePromise(promise2,onRejected(value), resolve, reject)
                 })
             }
             if(this.status===Promise1.FULFILLED){
@@ -93,18 +97,18 @@ class Promise1{
     }
 }
 function resolvePromise(promise2, x, resolve, reject){
-    console.log(x,'xxxxxxxxxxxxxx')
     // 循环引用报错
+    console.log(x === promise2,'x === promise2x === promise2')
     if(x === promise2){
       // reject报错
-      return reject(new TypeError('Chaining cycle detected for promise'));
+      throw new TypeError('Chaining cycle detected for promise');
     }
     // 防止多次调用
     let called;
     // x不是null 且x是对象或者函数
     if (x != null && (typeof x === 'object' || typeof x === 'function')) {
       try {
-        // A+规定，声明then = x的then方法
+        // A+规定，声明then = x的then方法   x为promise，即then里面返回的是promise
         let then = x.then;
         // 如果then是函数，就默认是promise了
         if (typeof then === 'function') { 
@@ -133,13 +137,16 @@ function resolvePromise(promise2, x, resolve, reject){
         reject(e); 
       }
     } else {
-        console.log('################')
       resolve(x);
     }
 }
 Promise1.resolve = function(val){
     return new Promise1((resolve,reject)=>{
-      resolve(val)
+      if(val instanceof Promise1){
+        val.then(resolve,reject)
+      }else{
+        resolve(val)
+      } 
     });
   }
 Promise1.reject = function(val){
@@ -156,6 +163,19 @@ Promise1.race=function(promises){
 }
 //all方法(获取所有的promise，都执行then，把结果放到数组，一起返回)
 Promise1.all = function(promises){
+  let arrs = []
+  return new Promise1((resolve,reject)=>{
+    promises.forEach(item=>{
+      item.then((value)=>{
+        arrs.push(value)
+        if(arrs.length==promises.length){
+          resolve(arrs)
+        }
+      },reject)
+    })
+  })
+
+
     let arr = [];
     let i = 0;
     function processData(index,data){
@@ -173,11 +193,25 @@ Promise1.all = function(promises){
       };
     });
   }
-console.log('第一步')
-new Promise1((resolve, reject)=>{
-    resolve('这次一定')
-}).then((result)=>{
-    console.log(result,'33333333333')
-    return ()=>{console.log('vvvvv')}
-}).then((a)=>{a()})
-console.log('第三步')
+
+
+
+
+
+
+let p1 = new Promise((resolve,reject)=>{
+  resolve('111111')
+})
+let p2 = new Promise((resolve,reject)=>{
+  resolve('222222')
+})
+let p3 = new Promise((resolve,reject)=>{
+  reject('?????????')
+})
+Promise.all([p1,p2,p3]).then(value=>{
+  console.log('value????',value)
+},reason=>{
+  console.log('reason: '+reason)
+})
+
+
