@@ -1,28 +1,44 @@
-import { useSelector,useDispatch } from "react-redux";
-import {decrement,increment} from './counterSlice'
-function App() {
-  const count = useSelector(state => state.counter.value)
-  const dispatch = useDispatch()
-  console.log(decrement(),'decrementdecrement')
-  return (
-    <div className="App" style={{height:'2000px'}}>
-       <div>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
-      </div>
+import React from "react";
+export default class App extends React.Component{
+  state = {
+    count: 0
+  }
+  increment = () => {
+    console.log('循环100次 setState前的count', this.state.count)
+  for(let i=0;i<100;i++) {
+    this.setState({
+      count: this.state.count + 1
+    })
+  }
+  console.log('循环100次 setState后的count', this.state.count)
+  }
+  triple = () => {
+    console.log('triple setState前的count', this.state.count)
+    this.setState({
+      count: this.state.count + 1
+    });
+    this.setState({
+      count: this.state.count + 1
+    });
+    this.setState({
+      count: this.state.count + 1
+    });
+    console.log('triple setState后的count', this.state.count)
+  }
+  reduce = () => {
+    setTimeout(() => {
+      console.log('reduce setState前的count', this.state.count)
+      this.setState({
+        count: this.state.count - 1
+      });
+      console.log('reduce setState后的count', this.state.count)
+    },0);
+  }
+  render(){
+    return <div>
+      <button onClick={this.increment}>点我增加</button>
+      <button onClick={this.triple}>点我增加三倍</button>
+      <button onClick={this.reduce}>点我减少</button>
     </div>
-  );
+  }
 }
-
-export default App;
