@@ -13,10 +13,18 @@
       }
     </style>
     <script>
-      setTimeout(() => {
-        // 引起回流
-        document.querySelector('.test').style.transform = 'translateY(100px)'
-      }, 1000)
+      let channel = new MessageChannel();
+      let port1=channel.port1;
+      let port2=channel.port2;
+      port1.onmessage = function(e){
+        console.log('port1接收到的数据:',e.data);
+      }
+      port2.onmessage = function(e){
+        console.log('port2接收到的数据:',e.data);
+      }
+      port1.postMessage('111111')
+      port1.postMessage('222222')
+
     </script>
 </body>
 </html>
