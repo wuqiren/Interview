@@ -1,38 +1,19 @@
 import React from "react";
+import {  observable, autorun } from "mobx";
+let a = observable({
+  name: "fishfan",
+  age: 12
+});
+autorun(() => {
+  console.log(a);
+});
+setTimeout(() => {
+  a.name = 11;
+}, 3000);
+
 export default class App extends React.Component{
   state = {
     count: 0
-  }
-  increment = () => {
-    console.log('循环100次 setState前的count', this.state.count)
-  for(let i=0;i<100;i++) {
-    this.setState({
-      count: this.state.count + 1
-    })
-  }
-  console.log('循环100次 setState后的count', this.state.count)
-  }
-  triple = () => {
-    console.log('triple setState前的count', this.state.count)
-    this.setState({
-      count: this.state.count + 1
-    });
-    this.setState({
-      count: this.state.count + 1
-    });
-    this.setState({
-      count: this.state.count + 1
-    });
-    console.log('triple setState后的count', this.state.count)
-  }
-  reduce = () => {
-    setTimeout(() => {
-      console.log('reduce setState前的count', this.state.count)
-      this.setState({
-        count: this.state.count - 1
-      });
-      console.log('reduce setState后的count', this.state.count)
-    },0);
   }
   render(){
     return <div>
