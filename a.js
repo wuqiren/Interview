@@ -39,3 +39,10 @@ const RAF = {
         window.cancelAnimationFrame(this.intervalTimer)
     }
   }
+
+
+const add =(...arr)=>{
+  console.log(...arr)
+}
+
+add(1,2,3,4)
