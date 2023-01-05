@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width:200px;
+            height: 200px;
+            border:1px solid red;
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+    <ol id="parent"></ol>
+    <hello-world message="billl"></hello-world>
+    <template id="template">
+        <div>我是真TM服气</div>
+        <slot></slot>
+    </template>
+    <button id="remove">Remove</button>
+    <button id="move">move</button>
+    <div id="box"></div>
+    <script>
+        const logParent = document.getElementById("parent")
+        const removeButton = document.getElementById("remove")
+        const moveButton = document.getElementById("move")
+        const log = (message)=>{
+            const liChild =document.createElement("li");
+            liChild.innerHTML = message
+            logParent.appendChild(liChild);
+        }
+        removeButton.addEventListener('click',()=>{
+            const hello = document.querySelector('hello-world')
+            hello.parentNode.removeChild(hello)
+        })
+        moveButton.addEventListener('click',()=>{
+            const hello = document.querySelector('hello-world')
+            const box = document.getElementById("box")
+            box.appendChild(hello)
+        })
+        class HelloWorld extends HTMLElement {
+            constructor(){
+                log('被构造')
+                super();
+                const shadow=this.attachShadow({mode:'open'})
+                const div= document.createElement("div")
+                div.innerHTML='hello World'
+                div.className='hello'
+                const templateDOM=document.getElementById('template')
+                const cloneNode= templateDOM.content.cloneNode(templateDOM)
+                const style =document.createElement("style")
+                style.innerHTML=`
+                    .hello{
+                        color:red
+                    }
+                `
+                shadow.appendChild(style)
+                shadow.appendChild(cloneNode)
+            }
+            connectedCallback(){
+                log('被挂载到DOM树上')
+            }
+            disconnectedCallback(){
+                log('被移除了')
+            }
+            adoptedCallback(){
+                log('从A移除到B')
+            }
+            static get observedAttributes(){
+                return ['message']
+            }
+            attributeChangedCallback(name,oldValue,newValue){
+                log(name)
+                if(name==='message'){
+                    this.shadowRoot.get
+                }
+            }
+        }
+        customElements.define('hello-world', HelloWorld)
+    </script>
+</body>
+</html>

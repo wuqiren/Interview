@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <hello-world>
+        这垃圾工地
+    </hello-world>
+    <template id="template">
+        <div>我是真TM服气</div>
+        <slot></slot>
+    </template>
+    <script>
+        class HelloWorld extends HTMLElement {
+            constructor(){
+                super();
+                const shadow=this.attachShadow({mode:'open'})
+                const div= document.createElement("div")
+                div.innerHTML='hello World'
+                div.className='hello'
+                const templateDOM=document.getElementById('template')
+                const cloneNode= templateDOM.content.cloneNode(templateDOM)
+                const style =document.createElement("style")
+                style.innerHTML=`
+                    .hello{
+                        color:red
+                    }
+                `
+                shadow.appendChild(style)
+                shadow.appendChild(cloneNode)
+            }
+        }
+        customElements.define('hello-world', HelloWorld)
+    </script>
+</body>
+</html>

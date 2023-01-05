@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="600">
+        当前浏览器不支持canvas元素，请升级或更换浏览器！
+    </canvas>
+    <script>
+        let canvas = document.getElementById("canvas")
+        if(canvas.getContext){
+            let ctx = canvas.getContext('2d');
+            var gradient1 = ctx.createRadialGradient(100, 100, 100, 100, 100, 0);
+            gradient1.addColorStop(0, "#ff770f");
+            gradient1.addColorStop(1, "#ffffff");
+            ctx.beginPath();
+            ctx.fillStyle = gradient1;
+            ctx.arc(100, 100, 20, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+       const drawPoint =(x, y, radius, alpha)=> {
+            let ctx = this.ctx;
+            ctx.globalAlpha = alpha; //设置 Alpha 透明度
+            ctx.beginPath();
+            let gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+            gradient.addColorStop(0, 'rgba(0,0,0,1)');
+            gradient.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = gradient;
+            ctx.arc(x, y, radius, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+        }
+    </script>
+</body>
+</html>
