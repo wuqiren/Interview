@@ -1,48 +1,39 @@
-const RAF = {
-    intervalTimer: null,
-    timeoutTimer: null,
-    setTimeout (cb, interval) { // 实现setTimeout功能
-      let now = Date.now
-      let stime = now()
-      let etime = stime
-      let loop = () => {
-        this.timeoutTimer = window.requestAnimationFrame(loop)
-        etime = now()
-        if (etime - stime >= interval) {
-          cb()
-          window.cancelAnimationFrame(this.timeoutTimer)
-        }
-      }
-      this.timeoutTimer = window.requestAnimationFrame(loop)
-      return this.timeoutTimer
-    },
-    clearTimeout () {
-        window.cancelAnimationFrame(this.timeoutTimer)
-    },
-    setInterval (cb, interval) { // 实现setInterval功能
-      let now = Date.now
-      let stime = now()
-      let etime = stime
-      let loop = () => {
-        this.intervalTimer = window.requestAnimationFrame(loop)
-        etime = now()
-        if (etime - stime >= interval) {
-          stime = now()
-          etime = stime
-          cb()
-        }
-      }
-      this.intervalTimer = window.requestAnimationFrame(loop)
-      return this.intervalTimer
-    },
-    clearInterval () {
-        window.cancelAnimationFrame(this.intervalTimer)
-    }
-  }
-
-
-const add =(...arr)=>{
-  console.log(...arr)
+Function.prototype.mycall=function(context,...args){
+   context=context||window
+  context.fn=this;
+  let result=context.fn(...args);
+  delete context.fn;
+  return result;
 }
 
-add(1,2,3,4)
+Function.prototype.myapply=function(context,...args){
+  let content =context||window;
+  console.log(this,'thisthis')
+  content.fn=this;
+  let result=content.fn(args);
+  delete content.fn;
+  return result;
+}
+Function.prototype.mybind=function(context,...args){
+  context=context||window;
+  const _this=this;
+  return function F(){
+      if(this instanceof Function){
+          return _this(...args,...arguments);
+      }
+      return _this.apply(context,args.concat(...arguments));
+  }
+}
+let person={
+  age:13,
+  name:'fishfan'
+}
+function getAge(a,b,c){
+  console.log(this.age)
+  console.log(a,'aaaa')
+  console.log(b,'bbbb')
+  console.log(c,'cccc')
+}
+// getAge.mycall(person,33,44,55)
+getAge.myapply(person,[33,44,55])
+// getAge.mybind(person,22,33,44)()
