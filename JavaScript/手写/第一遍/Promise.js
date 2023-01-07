@@ -20,7 +20,6 @@ promise内部有resolved_和rejected_变量保存成功和失败的回调，
  * 
  */
 
-const { it } = require("node:test");
 
 
 class Promise1{

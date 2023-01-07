@@ -1,5 +1,5 @@
 const deepClone = function (obj, hash = new WeakMap()) {
-    if(value==null || value==undefined){
+    if(obj==null || obj==undefined){
         return obj;
     }
 

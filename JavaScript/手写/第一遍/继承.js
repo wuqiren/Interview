@@ -6,7 +6,8 @@
  */
 function Person(){
     this.age=10;
-    this.name='fishfan'
+    this.name='fishfan';
+    this.play = [1, 2, 3]
 }
 Person.prototype.getAge=function(){
     console.log(this.age)
@@ -167,4 +168,7 @@ function Child(){
 
 Child.prototype = Object.create(Parent.prototype)
 Child.prototype.constructor = Child;
+
+
+
 
