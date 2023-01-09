@@ -4,4 +4,4 @@ https://time.geekbang.org/column/article/147501
 
 https://time.geekbang.org/column/article/148546
 
-https://time.geekbang.org/column/article/150159
+https://time.geekbang.org/column/article/150159d
