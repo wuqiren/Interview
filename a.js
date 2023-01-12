@@ -1,39 +1,21 @@
-Function.prototype.mycall=function(context,...args){
-   context=context||window
-  context.fn=this;
-  let result=context.fn(...args);
-  delete context.fn;
-  return result;
-}
-
-Function.prototype.myapply=function(context,...args){
-  let content =context||window;
-  console.log(this,'thisthis')
-  content.fn=this;
-  let result=content.fn(args);
-  delete content.fn;
-  return result;
-}
-Function.prototype.mybind=function(context,...args){
-  context=context||window;
-  const _this=this;
-  return function F(){
-      if(this instanceof Function){
-          return _this(...args,...arguments);
+request(urls, maxNum, callback)
+ function request(urls, maxNum, callback) {
+  if (urls.length > maxNum) {
+    let reqNum = 0,
+    k = 0;
+    const thenFun = () => {
+      reqNum--;
+      if (k < urls.length) {
+        httpReq(url[k]).then(thenFun);
+        k++;
+      } else if (reqNum == 0) {
+        callback();
       }
-      return _this.apply(context,args.concat(...arguments));
+    };
+    for (let i = 0; i < maxNum; i++) {
+      reqNum++;
+      k++;
+      httpReq(urls[i]).then(thenFun);
+    }
   }
 }
-let person={
-  age:13,
-  name:'fishfan'
-}
-function getAge(a,b,c){
-  console.log(this.age)
-  console.log(a,'aaaa')
-  console.log(b,'bbbb')
-  console.log(c,'cccc')
-}
-// getAge.mycall(person,33,44,55)
-getAge.myapply(person,[33,44,55])
-// getAge.mybind(person,22,33,44)()
