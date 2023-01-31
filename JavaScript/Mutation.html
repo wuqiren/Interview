@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="div1"></div>
+    <button id="add1">添加子节点</button>
+    <button id="add2">添加属性</button>
+
+    <br>
+    <button id="stop">停止监听</button>
+    <script>
+        let div1 = document.getElementById('div1')
+
+        let button01 = document.getElementById('add1');
+        let button02 = document.getElementById('add2');
+        let button03 = document.getElementById('stop')
+        button01.onclick=()=>{
+            let a = document.createElement('a')
+            div1.appendChild(a)
+        }
+        button02.onclick=()=>{
+            div1.setAttribute('class','class01')
+        }
+        button03.onclick=()=>{
+            observer.disconnect()
+        }
+        // const observer =  new MutationObserver((mutationsList)=>{
+        //     // MutationRecord数组集合，记录了DOM节点发生变化的一些相关信息
+        //     console.log(mutationsList,'mutationsListmutationsList')
+        // })
+        // // 开启监听
+        // observer.observe(div1,{
+        //     childList:true,
+        //     attributes:true
+        // })
+        // 使用MutationObserver对象封装一个监听DOM生成的函数
+
+(function(win){
+    'use strict';
+    let listeners = [];
+    let doc = win.document;
+    let MutationObserver = win.MutationObserver
+    let observer;
+
+    function ready(selector,fn){
+        // 存储选择器和回调函数
+        listeners.push({
+            selector,
+            fn,
+        })
+        console.log(observer,'observerobserver')
+        if(!observer){
+            // 监听document变化
+            observer = new MutationObserver(check);
+            console.log(observer,'observerobserverobserver')
+            observer.observe(doc.documentElement,{
+                childList:true,
+                subtree:true,
+                attributes:true
+            })
+        }
+        check()
+    }
+    function check(){
+        console.log(listeners,'listenerslisteners')
+        // 检查是否匹配已存储的节点
+        for(let i=0;i<listeners.length;i++){
+            let listener = listeners[i];
+            // 检查节点是否匹配
+            console.log(doc,'docdoc')
+            let elements = doc.querySelectorAll(listener.selector);
+            console.log(elements,'elementselements')
+            for(let j=0;j<elements.length;j++){
+                let element = elements[j];
+                // 确保回调函数只会对元素调用一次
+                if(!element.ready){
+                    element.ready =true;
+                    listener.fn.call(element,element)
+                }
+            }
+        }
+    }
+    win.ready= ready;
+})(window)
+
+ready('.class01',(e)=>{
+    console.log('我是重大时代a')
+    console.log(e,'eeee')
+})
+    </script>
+</body>
+</html>

@@ -3,9 +3,13 @@ const path = require('path')
 const fs =require('fs')
 const parser = require('@babel/parser')
 const babel = require('@babel/core')
+const {SyncHooks} = require('tapable')
 const traverse = require('@babel/traverse').default
 
 const entryPath = configFileContent.entry
+const hooks = {
+    emit:new SyncHooks()
+}
 let ID=0;
 // 解析单个文件
 function createAsset(filename){
@@ -107,6 +111,14 @@ function writeFile(code){
     }
     fs.writeFileSync(absolutePath,code,'utf-8')
 }
+
+function initPlugins(){
+    const plugins = configFileContent.plugin;
+    plugins.forEach(plugin=>{
+        plugin.apply(hooks)
+    })
+}
+initPlugins()
 const graph = createGraph(entryPath)
 
 const codeResult = bundle(graph)
