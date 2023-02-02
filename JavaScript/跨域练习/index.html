@@ -8,13 +8,11 @@
 </head>
 <body>
     <script type="text/javascript">
-        window.fetch('http://8000', {
-            method: 'get'
-        }).then(function(response) {
-            
-        }).catch(function(err) {
-            // Error :(
-        });
+       fetch({
+        url:'http://127.0.0.1:5500/JavaScript/%E8%B7%A8%E5%9F%9F%E7%BB%83%E4%B9%A0/index.html'
+       }).then(data=>{
+        console.log(data)
+       })
     </script>
 </body>
 </html>
