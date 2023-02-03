@@ -1,9 +1,4 @@
-function add (){
-    let a = 1;
-    return ()=>{
-        console.log(a)
-    }
+const a = ()=>{
+    console.log(arguments)
 }
-
-add()()
-console.log(a)
+a(1)
