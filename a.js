@@ -1,4 +1,5 @@
-const a = ()=>{
-    console.log(arguments)
+let a =1
+function add(){
+    console.log(a);
 }
-a(1)
+add()
