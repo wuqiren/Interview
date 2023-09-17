@@ -1,11 +1,15 @@
-const myMap = new Map();
-myMap.set('name', 'John');
-myMap.set('age', 30);
+// 原型链继承
+function Parent() {
+    this.name = 'parent';
+}
+Parent.prototype.getName = function () { 
+    return this.name;
+}
+function Child() { 
+    this.name = 'child';
+}
 
-// 将 Map 转换为对象数组
-const mapArray = Array.from(myMap);
+Child.prototype = new Parent();
 
-// 将对象数组转换为 JSON 字符串
-const jsonString = JSON.stringify(myMap);
-
-console.log(jsonString);
+var child1 = new Child();
+console.log(child1.getName()); //child
