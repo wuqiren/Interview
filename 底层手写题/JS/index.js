@@ -1,15 +1,8 @@
-// 原型链继承
-function Parent() {
-    this.name = 'parent';
-}
-Parent.prototype.getName = function () { 
-    return this.name;
-}
-function Child() { 
-    this.name = 'child';
-}
+let numbers = [1, 2, 11, 22, 333]
+let filterNumbers = []
 
-Child.prototype = new Parent();
-
-var child1 = new Child();
-console.log(child1.getName()); //child
+for (let i = 0; i < numbers.length; i++) { 
+    if (numbers[i] > 10) {
+        filterNumbers.push(numbers[i])
+    }
+}
