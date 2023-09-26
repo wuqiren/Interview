@@ -1,8 +1,12 @@
-let numbers = [1, 2, 11, 22, 333]
-let filterNumbers = []
-
-for (let i = 0; i < numbers.length; i++) { 
-    if (numbers[i] > 10) {
-        filterNumbers.push(numbers[i])
-    }
+const judge = (value) => {
+    console.log(Object.prototype.toString.call(value) )
 }
+judge(1) // [object Number]
+judge('1')// [object String]
+judge(null)// [object Null]
+judge(undefined) // [object Undefined]
+judge(console.log)// [object Function]
+judge(Symbol()) // [object Symbol]
+judge(47n)//[object BigInt]
+judge({})//[object Object]
+judge([1,2,3])//[object Array]
