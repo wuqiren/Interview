@@ -1,31 +1,64 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #greenBox{
+      width: 200px;
+      height: 200px;
+      background: #c2f5ca;
+    }
+    #pinkBox{
+      width: 100px;
+      height: 100px;
+      background-color: #f7d0d0;
+      color:#fff;  
+      position: absolute;
+    }
+    #blackBox{
+      width: 50px;
+      height: 50px;
+      background: #000;
+    }
+  </style>
 
-<html>
+ 
+</head>
 <body>
-    <div class="test"></div>
-    <style>
-      .test {
-        position: absolute;
-        top: 10px;
-        width: 100px;
-        height: 100px;
-        background: red;
-      }
-    </style>
-    <script>
-      let channel = new MessageChannel();
-      let port1=channel.port1;
-      let port2=channel.port2;
-      port1.onmessage = function(e){
-        console.log('port1接收到的数据:',e.data);
-      }
-      port2.onmessage = function(e){
-        console.log('port2接收到的数据:',e.data);
-      }
-      port1.postMessage('111111')
-      port1.postMessage('222222')
+  <div id="greenBox">
+    <div id="pinkBox">
+      <div id="blackBox"></div>
+    </div>
+  </div>
+  <button></button>
+  <script> 
+  document.addEventListener('contextmenu', function(e) {
+  e.preventDefault(); // 阻止右键菜单弹出
+});
+    let greenBox=document.getElementById('greenBox')
+    let pinkBox=document.getElementById('pinkBox')
+    let blackBox=document.getElementById('blackBox')
+  const button = document.querySelector('button');
+button.addEventListener('click', ()=> {
+  console.log(this); // 输出触发事件的按钮元素
+});
 
-    </script>
+    greenBox.addEventListener('click',()=>{
+      console.log(this)
+      console.log('greenBox')
+    })
+    pinkBox.addEventListener('click',(event)=>{
+      console.log('pinkBox') 
+    })
+    pinkBox.addEventListener('click',(event)=>{
+      console.log('大萨达撒大所大') 
+    })
+    blackBox.addEventListener('click',(event)=>{
+      console.log('blackBox')
+    })
+  </script>
 </body>
 </html>
- 
