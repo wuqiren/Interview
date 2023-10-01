@@ -1,9 +1,14 @@
-function person(status) {
-    if (status) {
-        var value = "蛙人" 
-    } else {
-        console.log(value) // undefined
-    }
-    console.log(value) // undefined
-}
-person(false)
+var MyApp = (function () {
+  var score = 100;
+  return {
+    add: function (x, y) {
+      return x + y + score;
+      },
+      setScore: function (x) {
+          this.score=x
+      }
+  };
+})();
+MyApp.setScore(200);
+var sum = MyApp.add(1, 2);
+console.log(sum);
