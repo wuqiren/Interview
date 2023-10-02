@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        #box{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: relative;
+        }
+    </style>
+    <div id="box"></div>
+    <script>
+        // 1. 获取元素
+        let box = document.getElementById('box');
+        // 2. 绑定事件
+        function requestAnimationFrameFn() {
+            box.style.left = '0px'
+			let timer = null // 可注掉
+			function remove(){
+                let leftVal = parseInt(box.style.left)
+                if(leftVal >300){
+                    console.log('2333')
+                    window.cancelAnimationFrame(timer);
+                }else{
+                    console.log('??')
+                    box.style.left = leftVal+10+'px';
+                    console.log(box.style.left)
+                   timer= window.requestAnimationFrame(remove);
+                }
+            }
+            window.requestAnimationFrame(remove);
+		}
+       requestAnimationFrameFn();
+    </script>
+</body>
+</html>
