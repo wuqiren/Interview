@@ -1,3 +1,4 @@
-const arr = [1, 2, 3]
-Object.freeze(arr)
-arr.push(3)// TypeError: Cannot add property 3, object is not extensible
+const obj = {a:1}
+
+const newa = Object.assign(obj, { b: 3 })
+console.log(newa)
