@@ -66,3 +66,49 @@ function m(construct,...args){
     let result = construct.apply(obj,args);
     return typeof result === 'object'?result:obj;
 }
+
+function curry(fn){
+    return function curried(args){
+        if(args.length<fn.length){
+            return function(...args2){
+                return curried.apply(this,args.concat(args2))
+            }args
+        }else{
+            return fn.apply(this,args)
+        }
+    }
+}
+
+
+
+function deepClone(obj,map=new WeakMap()){
+    if(typeof obj !=='object' || obj===null){
+        return obj
+    }
+    if(map.has(obj)){
+        return map.get(obj)
+    }
+    if(Array.isArray(obj)){
+        let newArray=[]
+        newArray=obj.map(item=>deepClone(item,map))
+        map.set(obj,newArray)
+        return newArray
+    }
+    const newObj = {}
+    map.set(obj,newObj)
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            newObj[key]=deepClone(obj[key],map)
+        }
+    }
+    return newObj;
+}
+
+const a = {
+    name:'s',
+    aa:213123,
+    dd:{a:1,v:2,d:3},
+    arr:[1,2,3,4]
+}
+
+console.log(deepClone(a))

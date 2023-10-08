@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        const word = [
+            ()=>{
+                console.log('任务1')
+            },
+             ()=>{
+                console.log('任务2')
+            },
+             ()=>{
+                console.log('任务3')
+            },
+             ()=>{
+                console.log('任务4')
+            },
+             ()=>{
+                console.log('任务5')
+            },
+        ]
+        function progress(dealine){
+            console.log('剩余多少时间',dealine.timeRemaining())
+            if(dealine.timeRemaining()>0 && word.length>0){
+                working()
+            }
+            console.log('dasdasd')
+            if(word.length>0){
+                console.log('333')
+                window.requestIdleCallback(progress)
+            }
+        }
+        function working(){
+            const work = word.shift()
+            work()
+        }
+        window.requestIdleCallback(progress)
+    </script>
+</body>
+</html>
